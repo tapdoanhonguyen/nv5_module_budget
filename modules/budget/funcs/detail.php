@@ -9,6 +9,8 @@
  */
 
 if (!defined('NV_IS_MOD_BUDGET')) die('Stop!!!');
+$base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name ;
+
 $array_search = [
     'q' => $nv_Request->get_title('q', 'post,get'),
     'status' => $nv_Request->get_int('status', 'post,get', 0),
@@ -24,10 +26,76 @@ if (empty($data_content)) {
 }
 $id = $data_content['id'];
 
+$related_new_array = [];
+$related_array = [];
+$st_links = 10;
+if ($st_links > 0) {
+    $db_slave->sqlreset()
+        ->select('*')
+        ->from(NV_PREFIXLANG . '_' . $module_data )
+        ->where('status=1 AND pubdate > ' . $data_content['pubdate'])
+        ->order('pubdate ASC')
+        ->limit($st_links);
+
+    $related = $db_slave->query($db_slave->sql());
+	$number = 0;
+    while ($row = $related->fetch()) {
+		$number++;
+        $link = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $array_cat[$data_content['catid']]['alias'] . '/' . $row['alias'] . $global_config['rewrite_exturl'];
+        $related_new_array[] = [
+            'stt' => $number,
+            'cat' => $row['catid'] ? $array_cat[$row['catid']]['title'] : '',
+            'title' => $row['title'],
+            'time' => $row['pubdate'],
+            'qddate' => $row['qddate'],
+            'reporttemplate' => $row['reporttemplate'],
+            'number' => $row['number'],
+            'file' => $row['file'],
+            'reportyear' => $array_reportyear[$row['reportyear']],
+            'addtime' => nv_date('H:i d/m/Y', $row['addtime']),
+            'edittime' => nv_date('H:i d/m/Y', $row['edittime']),
+            'link' => $link
+        ];
+    }
+    $related->closeCursor();
+
+    sort($related_new_array, SORT_NUMERIC);
+
+    $db_slave->sqlreset()
+        ->select('*')
+        ->from(NV_PREFIXLANG . '_' . $module_data )
+        ->where('status=1 AND pubdate < ' . $data_content['pubdate'])
+        ->order('pubdate DESC')
+        ->limit($st_links);
+
+    $related = $db_slave->query($db_slave->sql());
+	$number = 0;
+    while ($row = $related->fetch()) {
+		$number++;
+        $link = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $array_cat[$data_content['catid']]['alias'] . '/' . $row['alias'] . $global_config['rewrite_exturl'];
+        $related_array[] = [
+            'stt' => $number,
+            'cat' => $row['catid'] ? $array_cat[$row['catid']]['title'] : '',
+            'title' => $row['title'],
+            'time' => $row['pubdate'],
+            'reporttemplate' => $row['reporttemplate'],
+            'qddate' => $row['qddate'],
+            'number' => $row['number'],
+            'file' => $row['file'],
+            'reportyear' => $array_reportyear[$row['reportyear']],
+            'addtime' => nv_date('H:i d/m/Y', $row['addtime']),
+            'edittime' => nv_date('H:i d/m/Y', $row['edittime']),
+            'link' => $link
+        ];
+    }
+
+    $related->closeCursor();
+    unset($related, $row);
+}
 $page_title = $data_content['title'];
 $description = $data_content['description'];
 
-$contents = nv_theme_budget_detail($data_content,$array_search);
+$contents = nv_theme_budget_detail($data_content,$array_search,$related_new_array, $related_array);
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme($contents);

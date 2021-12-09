@@ -35,3 +35,5 @@ $lang_module['link_file'] = 'Đường dẫn toàn văn';
 $lang_module['file'] = 'Danh sách tệp báo cáo';
 $lang_module['choose_cat'] = 'Danh mục báo cáo';
 $lang_module['export'] = 'Xuất XML';
+$lang_module['related_new'] = 'Ngân sách mới';
+$lang_module['related'] = 'Ngân sách cũ';

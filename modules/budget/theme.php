@@ -192,7 +192,7 @@ function nv_theme_budget_viewcat($array_data, $array_op, $array_search, $generat
  * @param mixed $num
  * @return
  */
-function nv_theme_budget_detail($data_content,$array_search)
+function nv_theme_budget_detail($data_content,$array_search,$related_new_array, $related_array)
 {
     global $global_config, $module_name, $module_file, $module_upload, $module_config, $module_info, $lang_module, $lang_global, $op, $array_cat, $array_reportyear;
 
@@ -246,7 +246,74 @@ function nv_theme_budget_detail($data_content,$array_search)
         ]);
         $xtpl->parse('main.reportyear_search');
     }
+	if (!empty($related_new_array) or !empty($related_array) or !empty($topic_array)) {
+        if (!empty($related_new_array)) {
+            foreach ($related_new_array as $key => $related_new_array_i) {
+				if (!empty($related_new_array_i['file'])) {
+					$file = explode('|', $related_new_array_i['file']);
+				} else {
+					$file = [];
+				}
+				if (!empty($file)) {
+					foreach ($file as $file_i) {
+						$file_title = basename($file_i);
 
+						if (!empty($file_i) and file_exists(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/' . $file_i)) {
+							$file_i = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $file_i;
+						}
+						$data_file_i = [
+							'link' => $file_i,
+							'title' => $file_title
+						];
+						$xtpl->assign('FILE', $data_file_i);
+						$xtpl->parse('main.others.related_new.loop.file');
+					}
+				}
+                $related_new_array_i['time'] = nv_date('d/m/Y', $related_new_array_i['time']);
+				$related_new_array_i['qddate'] = nv_date('d/m/Y', $related_new_array_i['qddate']);
+                $xtpl->assign('RELATED_NEW', $related_new_array_i);
+
+
+                $xtpl->parse('main.others.related_new.loop');
+            }
+            unset($key);
+            $xtpl->parse('main.others.related_new');
+        }
+
+        if (!empty($related_array)) {
+            foreach ($related_array as $related_array_i) {
+				if (!empty($related_array_i['file'])) {
+					$file = explode('|', $related_array_i['file']);
+				} else {
+					$file = [];
+				}
+				if (!empty($file)) {
+					foreach ($file as $file_i) {
+						$file_title = basename($file_i);
+
+						if (!empty($file_i) and file_exists(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/' . $file_i)) {
+							$file_i = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $file_i;
+						}
+						$data_file_i = [
+							'link' => $file_i,
+							'title' => $file_title
+						];
+						$xtpl->assign('FILE', $data_file_i);
+						$xtpl->parse('main.others.related.loop.file');
+					}
+				}
+				$related_array_i['qddate'] = nv_date('d/m/Y', $related_array_i['qddate']);
+                $related_array_i['time'] = nv_date('d/m/Y', $related_array_i['time']);
+                $xtpl->assign('RELATED', $related_array_i);
+
+
+                $xtpl->parse('main.others.related.loop');
+            }
+            $xtpl->parse('main.others.related');
+        }
+        $xtpl->parse('main.others');
+    }
+	
     $xtpl->parse('main');
     return $xtpl->text('main');
 }

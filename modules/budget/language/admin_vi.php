@@ -57,6 +57,8 @@ $lang_module['budget_addnew'] = 'Thêm báo cáo';
 $lang_module['budget_update'] = 'Cập nhật báo cáo';
 $lang_module['choose_cat'] = 'Chọn danh mục báo cáo';
 $lang_module['choose_reportyear'] = 'Chọn năm báo cáo';
+$lang_module['related_new'] = 'Ngân sách mới';
+$lang_module['related'] = 'Ngân sách cũ';
 
 $lang_module['error_required_title'] = 'Lỗi: bạn cần nhập dữ liệu cho Tên báo cáo';
 $lang_module['error_required_alias'] = 'Lỗi: bạn cần nhập dữ liệu cho Liên kết tĩnh';

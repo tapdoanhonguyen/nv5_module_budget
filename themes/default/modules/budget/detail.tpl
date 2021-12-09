@@ -82,4 +82,94 @@
 		</tbody>
 	</table>
 </div>
+
+
+<!-- BEGIN: others -->
+<div class="news_column panel panel-default">
+    <div class="panel-body other-news">
+       
+
+        <!-- BEGIN: related_new -->
+        <p class="h3"><strong>{LANG.related_new}</strong></p>
+        <div class="clearfix">
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th class="w50 text-center">STT</th>
+							<th>{LANG.title}</th>
+							<th>{LANG.reportyear}</th>
+							<th>{LANG.template}</th>
+							<th>{LANG.number}</th>
+							<th>{LANG.qddate}</th>
+							<th>{LANG.link_file}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN: loop -->
+						<tr>
+							<td class="text-center"> {RELATED_NEW.stt} </td>
+							<td><a href="{RELATED_NEW.link}" title="{RELATED_NEW.title}">{RELATED_NEW.title}</a></td>
+							<td>{RELATED_NEW.reportyear}</td>
+							<td>{RELATED_NEW.reporttemplate}</td>
+							<td>{RELATED_NEW.number}</td>
+							<td>{RELATED_NEW.qddate}</td>
+							<td class="link_ckns_stc">
+								<ul>
+								<!-- BEGIN: file -->
+									<li><a href="{FILE.link}" title="{FILE.title}" target="_blank">{FILE.title}</a></li>
+								<!-- END: file -->
+								</ul>
+							</td>
+						</tr>
+						<!-- END: loop -->
+					</tbody>
+				</table>
+			</div>
+		
+        </div>
+        <!-- END: related_new -->
+
+        <!-- BEGIN: related -->
+        <p class="h3"><strong>{LANG.related}</strong></p>
+        <div class="clearfix">
+            <div class="table-responsive">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th class="w50 text-center">STT</th>
+							<th>{LANG.title}</th>
+							<th>{LANG.reportyear}</th>
+							<th>{LANG.template}</th>
+							<th>{LANG.number}</th>
+							<th>{LANG.qddate}</th>
+							<th>{LANG.link_file}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- BEGIN: loop -->
+						<tr>
+							<td class="text-center"> {RELATED.stt} </td>
+							<td><a href="{RELATED.link}" title="{RELATED.title}">{RELATED.title}</a></td>
+							<td>{RELATED.reportyear}</td>
+							<td>{RELATED.reporttemplate}</td>
+							<td>{RELATED.number}</td>
+							<td>{RELATED.qddate}</td>
+							<td class="link_ckns_stc">
+								<ul>
+								<!-- BEGIN: file -->
+									<li><a href="{FILE.link}" title="{FILE.title}" target="_blank">{FILE.title}</a></li>
+								<!-- END: file -->
+								</ul>
+							</td>
+						</tr>
+						<!-- END: loop -->
+					</tbody>
+				</table>
+			</div>
+        </div>
+        <!-- END: related -->
+    </div>
+</div>
+<!-- END: others -->
 <!-- END: main -->
