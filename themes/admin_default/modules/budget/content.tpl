@@ -153,7 +153,7 @@
         changeYear : !0,
         showOtherMonths : !0,
         showOn : "focus",
-        yearRange : "-90:+0"
+        yearRange : "-10:+10"
     });
 
     function nv_add_file() {

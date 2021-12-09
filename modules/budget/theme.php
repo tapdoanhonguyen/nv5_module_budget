@@ -34,7 +34,7 @@ function nv_theme_budget_main($array_data, $array_ckns, $array_search, $generate
 
     if (!empty($array_data)) {
         foreach ($array_data as $items) {
-            $items['stt'] = $stt++;
+            //$items['stt'] = $stt++;
             $items['reportyear'] = $array_reportyear[$items['reportyear']];
             $items['qddate'] = nv_date('d/m/Y', $items['qddate']);
 
@@ -90,10 +90,9 @@ function nv_theme_budget_main($array_data, $array_ckns, $array_search, $generate
         ]);
         $xtpl->parse('main.reportyear_search');
     }
-
     if (!empty($generate_page)) {
-        $xtpl->assign('PAGE', $generate_page);
-        $xtpl->parse('main.page');
+        $xtpl->assign('NV_GENERATE_PAGE', $generate_page);
+        $xtpl->parse('main.generate_page');
     }
 
     $xtpl->parse('main');
@@ -193,7 +192,7 @@ function nv_theme_budget_viewcat($array_data, $array_op, $array_search, $generat
  * @param mixed $num
  * @return
  */
-function nv_theme_budget_detail($data_content)
+function nv_theme_budget_detail($data_content,$array_search)
 {
     global $global_config, $module_name, $module_file, $module_upload, $module_config, $module_info, $lang_module, $lang_global, $op, $array_cat, $array_reportyear;
 

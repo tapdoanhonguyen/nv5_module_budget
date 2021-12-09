@@ -62,5 +62,6 @@ $lang_module['error_required_title'] = 'Lỗi: bạn cần nhập dữ liệu ch
 $lang_module['error_required_alias'] = 'Lỗi: bạn cần nhập dữ liệu cho Liên kết tĩnh';
 $lang_module['error_required_cat'] = 'Lỗi: bạn cần chọn dữ liệu cho Danh mục báo cáo';
 $lang_module['error_required_reportyear'] = 'Lỗi: bạn cần chọn dữ liệu cho Năm báo cáo';
+$lang_module['error_alias_duplicate'] = 'Lỗi: Liên kế đã tồn tại, bạn khai báo liên kết tĩnh khác';
 $lang_module['alert_title_not_cat'] = 'Chưa có danh mục báo cáo';
 $lang_module['alert_content_not_cat'] = 'Vui lòng thêm danh mục báo cáo để thêm báo cáo';

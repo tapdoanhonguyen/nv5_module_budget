@@ -43,7 +43,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $row['reporttemplate'] = $nv_Request->get_title('reporttemplate', 'post', '');
     $row['number'] = $nv_Request->get_title('number', 'post', '');
     $button_submit = $lang_module['budget_addnew'];
-
+	$alias_exit = $db->query('SELECT id FROM ' . NV_PREFIXLANG . '_' . $module_data . ' WHERE alias = "' . $row['alias'] . '"')->fetchColumn();
     if (preg_match('/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/', $nv_Request->get_string('qddate', 'post'), $m)) {
         $row['qddate'] = mktime(23, 59, 59, $m[2], $m[1], $m[3]);
     } else {
@@ -80,7 +80,9 @@ if ($nv_Request->isset_request('submit', 'post')) {
         $error[] = $lang_module['error_required_cat'];
     }elseif (empty($row['reportyear'])) {
         $error[] = $lang_module['error_required_reportyear'];
-    }
+    } elseif($alias_exit){
+		$error[] = $lang_module['error_alias_duplicate'];
+	}
 
     if (empty($error)) {
         try {

@@ -9,7 +9,12 @@
  */
 
 if (!defined('NV_IS_MOD_BUDGET')) die('Stop!!!');
-
+$array_search = [
+    'q' => $nv_Request->get_title('q', 'post,get'),
+    'status' => $nv_Request->get_int('status', 'post,get', 0),
+    'cat' => $nv_Request->get_int('cat', 'post,get', 0),
+    'year' => $nv_Request->get_int('year', 'post,get', 0),
+];
 $sql = $db->query('SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . ' WHERE alias = ' . $db->quote($alias_url) . ' AND status=1  AND catid = ' . $array_search_params['catid']);
 $data_content = $sql->fetch();
 
@@ -22,7 +27,7 @@ $id = $data_content['id'];
 $page_title = $data_content['title'];
 $description = $data_content['description'];
 
-$contents = nv_theme_budget_detail($data_content);
+$contents = nv_theme_budget_detail($data_content,$array_search);
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme($contents);

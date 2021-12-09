@@ -14,9 +14,11 @@ if (!defined('NV_IS_MOD_BUDGET'))
 $page_title = $lang_module['budget'];
 $key_words = $module_info['keywords'];
 
-$base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name;
+$base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op;
 $array_data = [];
 $where = "";
+$base_url_mod = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op . '&amp;per_page=' . $per_page;
+
 
 $array_search = [
     'q' => $nv_Request->get_title('q', 'post,get'),
@@ -25,17 +27,17 @@ $array_search = [
 ];
 
 if (!empty($array_search['q'])) {
-    $base_url .= '&q=' . $array_search['q'];
+    $base_url .= '&amp;q=' . $array_search['q'];
     $where .= ' AND (title LIKE "%' . $array_search['q'] . '%" OR number LIKE "%' . $array_search['q'] . '%")';
 }
 
 if (!empty($array_search['cat'])) {
-    $base_url .= '&cat=' . $array_search['cat'];
+     $base_url .= '&amp;cat=' . $array_search['cat'];
     $where .= ' AND catid=' . $array_search['cat'];
 }
 
 if (!empty($array_search['year'])) {
-    $base_url .= '&year=' . $array_search['year'];
+     $base_url .= '&amp;year=' . $array_search['year'];
     $where .= ' AND reportyear=' . $array_search['year'];
 }
 
@@ -43,7 +45,7 @@ if (!empty($array_search['year'])) {
 $show_view = false;
 if (!$nv_Request->isset_request('id', 'post,get')) {
     $show_view = true;
-    $page = $nv_Request->get_int('page', 'post,get', 1);
+	$page = $nv_Request->get_int('page', 'post,get', 1);
     $db->sqlreset()
         ->select('COUNT(*)')
         ->from('' . NV_PREFIXLANG . '_' . $module_data)
@@ -64,11 +66,16 @@ if (!$nv_Request->isset_request('id', 'post,get')) {
 }
 
 $result = $db->query($db->sql());
+$base_url_mod .= '&amp;num_items=' . $num_items;
+ $number = $page > 1 ? ($per_page * ($page - 1)) + 1 : 1;
 while ($item = $result->fetch()) {
+	$item['stt'] = $number;
     $array_data[$item['id']] = $item;
+	$number++;
 }
 
 $result = $db->query($db->sql());
+
 while ($item = $result->fetch()) {
     $array_ckns[$item['id']]['title'] = $item['title'];
     $array_ckns[$item['id']]['link'] = $item['catid'];
@@ -82,7 +89,9 @@ while ($item = $result->fetch()) {
     $array_ckns[$item['id']]['guid'] = $array_cat[$item['catid']]['alias'] . '/' . $item['alias'];
 }
 
-$generate_page = nv_alias_page($page_title, $base_url, $num_items, $per_page, $page);
+//$base_url = $base_url_mod;
+$generate_page = nv_generate_page($base_url, $num_items, $per_page, $page);
+   
 if ($page > 1) {
     $page_title = $page_title . ' - ' . $lang_global['page'] . ' ' . $page;
 }
