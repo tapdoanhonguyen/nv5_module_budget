@@ -33,7 +33,7 @@ if ($st_links > 0) {
     $db_slave->sqlreset()
         ->select('*')
         ->from(NV_PREFIXLANG . '_' . $module_data )
-        ->where('status=1 AND pubdate > ' . $data_content['pubdate'])
+        ->where('status=1 AND pubdate > ' . $data_content['pubdate'] . ' AND catid = ' . $data_content['catid'])
         ->order('pubdate ASC')
         ->limit($st_links);
 
@@ -64,7 +64,7 @@ if ($st_links > 0) {
     $db_slave->sqlreset()
         ->select('*')
         ->from(NV_PREFIXLANG . '_' . $module_data )
-        ->where('status=1 AND pubdate < ' . $data_content['pubdate'])
+        ->where('status=1 AND pubdate < ' . $data_content['pubdate'] . ' AND catid = ' . $data_content['catid'])
         ->order('pubdate DESC')
         ->limit($st_links);
 
