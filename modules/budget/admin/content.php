@@ -46,13 +46,13 @@ if ($nv_Request->isset_request('submit', 'post')) {
 	
 		$alias_exit = $db->query('SELECT id FROM ' . NV_PREFIXLANG . '_' . $module_data . ' WHERE alias = "' . $row['alias'] . '"')->fetchColumn();
     if (preg_match('/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/', $nv_Request->get_string('qddate', 'post'), $m)) {
-        $row['qddate'] = mktime(date("H",NV_CURRENTTIME), mktime(date("i",NV_CURRENTTIME), mktime(date("s",NV_CURRENTTIME), $m[2], $m[1], $m[3]);
+        $row['qddate'] = mktime(date("H",NV_CURRENTTIME), date("i",NV_CURRENTTIME), date("s",NV_CURRENTTIME), $m[2], $m[1], $m[3]);
     } else {
         $row['qddate'] = 0;
     }
 	
     if (preg_match('/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4})$/', $nv_Request->get_string('pubdate', 'post'), $m)) {
-        $row['pubdate'] = mktime(date("H",NV_CURRENTTIME), mktime(date("i",NV_CURRENTTIME), mktime(date("s",NV_CURRENTTIME), $m[2], $m[1], $m[3]);
+        $row['pubdate'] = mktime(date("H",NV_CURRENTTIME), date("i",NV_CURRENTTIME), date("s",NV_CURRENTTIME), $m[2], $m[1], $m[3]);
     } else {
         $row['pubdate'] = 0;
     }
