@@ -57,9 +57,11 @@ if (!$nv_Request->isset_request('id', 'post,get')) {
         ->offset(($page - 1) * $per_page);
 
     $result = $db->query($db->sql());
-
+	 $number = $page > 1 ? ($per_page * ($page - 1)) + 1 : 1;
     while ($item = $result->fetch()) {
+		$item['stt'] = $number;
         $array_data[$item['id']] = $item;
+		$number++;
     }
 }
 

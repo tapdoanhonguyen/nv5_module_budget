@@ -122,7 +122,7 @@ function nv_theme_budget_viewcat($array_data, $array_op, $array_search, $generat
 
     if (!empty($array_data)) {
         foreach ($array_data as $items) {
-            $items['stt'] = $stt++;
+            //$items['stt'] = $stt++;
             $items['reportyear'] = $array_reportyear[$items['reportyear']];
             $items['qddate'] = nv_date('d/m/Y', $items['qddate']);
 
