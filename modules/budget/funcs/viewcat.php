@@ -63,7 +63,7 @@ if (!$nv_Request->isset_request('id', 'post,get')) {
     }
 }
 
-$generate_page = nv_alias_page($page_title, $base_url, $num_items, $per_page, $page);
+$generate_page = nv_generate_page($base_url, $num_items, $per_page, $page);
 if ($page > 1) {
     $page_title = $page_title . ' - ' . $lang_global['page'] . ' ' . $page;
 }

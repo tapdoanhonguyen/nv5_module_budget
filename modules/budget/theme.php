@@ -176,8 +176,8 @@ function nv_theme_budget_viewcat($array_data, $array_op, $array_search, $generat
     }
 
     if (!empty($generate_page)) {
-        $xtpl->assign('PAGE', $generate_page);
-        $xtpl->parse('main.page');
+        $xtpl->assign('NV_GENERATE_PAGE', $generate_page);
+        $xtpl->parse('main.generate_page');
     }
 
     $xtpl->parse('main');
